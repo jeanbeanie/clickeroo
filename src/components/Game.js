@@ -4,8 +4,8 @@ import React from 'react';
 
 const defaultPlayerStatus = "You are alive and kicking!";
 const defaultHP = 1000;
-const stomachCapacity = 10;
-const defaultDecayModifier = 10;
+const stomachCapacity = 75;
+const defaultDecayModifier = 20;
 
 const initialState = {
     isPaused: false,
@@ -51,7 +51,7 @@ class Game extends React.Component {
       // total decay
       newHP = hp - amountToDecay;
       if(newHP < 0){newHP = 0}
-      this.setState({hp: newHP, stomach: newStomach, playerStatus:newPlayerStatus, food: food+.1})
+      this.setState({hp: newHP, stomach: newStomach, playerStatus:newPlayerStatus, food: food+.5})
     
     } else { // game is paused or player is dead
       if(hp <= 0){
@@ -102,7 +102,7 @@ class Game extends React.Component {
   returnPauseOrRestartButton() {
     const {isPaused, hp} = this.state;
     const pauseLabel = isPaused ? "UNPAUSE GAME" : "PAUSE GAME";
-    const restartLabel = "RESTART GAME";
+    const restartLabel = "RESPAWN";
     const playerIsAlive = hp > 0;
 
     const label = playerIsAlive ?
@@ -121,7 +121,8 @@ class Game extends React.Component {
     const formattedFood = Number(food.toFixed(1));
     
     return <div>
-      {playerStatus}
+      <h4>You are a simple organism. All you can do is eat the particles that settle around you to hold off death a little longer.</h4>
+      <h5>{playerStatus}</h5>
       <br/>
       {this.returnPauseOrRestartButton()}
       <br/>
@@ -129,7 +130,7 @@ class Game extends React.Component {
       <br/>
       Current Hunger : [ {this.state.stomach}  ]
       <br/>
-      <button onClick={() => {this.eat()}}>EAT ({formattedFood} FOOD LEFT)</button>
+      <button onClick={() => {this.eat()}} disabled={formattedFood < 1}>EAT </button> ({formattedFood} FOOD HAS SETTLED AROUND YOU)
     </div>;
   }
 }
