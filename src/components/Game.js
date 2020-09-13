@@ -64,10 +64,9 @@ class Game extends React.Component {
 
   eat() {
     const {food, hp, isPaused} = this.state;
-      console.log("food", food)
     if(food >= 1 && hp > 0 && !isPaused){
-      const foodValue = 5;
-      const newFood = food - 1;
+      const foodValue = 5; // todo move this value out
+      const newFood = food - 1; // consume food
       const {stomach, stomachCapacity, playerStatus} = this.state;
       let newStomach = stomach;
       let newPlayerStatus = playerStatus;
